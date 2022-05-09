@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Models
 {
-    [NotMapped] //brak globalnego mapowania
+    //[NotMapped] //brak globalnego mapowania
     public class Address : Entity
     {
         public string Street { get; set; }

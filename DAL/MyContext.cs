@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using DAL.Configurations;
+using Microsoft.EntityFrameworkCore;
 using Models;
 using System;
 using System.Diagnostics.CodeAnalysis;
@@ -39,8 +40,21 @@ namespace DAL
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
+            //modelBuilder.Entity<Person>();
 
-            modelBuilder.Entity<Person>();
+            //modelBuilder.Entity<Person>().ToTable("People");
+            //modelBuilder.Entity<Person>()
+            //    .Property(x => x.FirstName).HasColumnName("Name").HasMaxLength(15);
+            //modelBuilder.Entity<Person>()
+            //    .Property(x => x.PESEL).HasColumnType("decimal(11,0)");
+            //modelBuilder.Entity<Person>()
+            //    .Property(x => x.LastName).IsRequired();
+            //modelBuilder.Entity<Person>().Ignore(x => x.Address); // == NotMapped
+
+            //modelBuilder.ApplyConfiguration(new PersonCofiguration());
+            modelBuilder.ApplyConfigurationsFromAssembly(typeof(PersonCofiguration).Assembly);
+
+            modelBuilder.Ignore<Address>(); // == NotMapped (globalny)
         }
 
         //public DbSet<Person> People { get; set; }

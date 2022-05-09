@@ -8,20 +8,20 @@ using System.Threading.Tasks;
 
 namespace Models
 {
-    [Table("People")]
+    //[Table("People")]
     public class Person : Entity
     {
-        [Column("Name")]
-        [MaxLength(15)]
+        //[Column("Name")]
+        //[MaxLength(15)]
         public string FirstName { get; set; }
-        [Required]
+        //[Required]
         public string LastName { get; set; }
         public DateTime? BithDate { get; set; }
-        [Column(TypeName = "decimal(11, 0)")] //określenie typu kolumny
+        //[Column(TypeName = "decimal(11, 0)")] //określenie typu kolumny
         //[Precision(11, 0)] //EF Core 6!
         public ulong PESEL { get; set; }
 
-        [NotMapped] // brak lokalnego mapowania
+        //[NotMapped] // brak lokalnego mapowania
         public Address Address { get; set; }
     }
 }
