@@ -14,7 +14,7 @@ namespace DAL.Configurations
         public override void Configure(EntityTypeBuilder<Person> builder)
         {
             base.Configure(builder);
-
+            //builder.HasKey(x => x.Guid);
             builder.ToTable("People", "efc");
             builder.Property(x => x.FirstName).HasColumnName("Name").HasMaxLength(15);
             builder.Property(x => x.PESEL).HasPrecision(11, 0);//.HasColumnType("decimal(11,0)");
@@ -22,6 +22,7 @@ namespace DAL.Configurations
             //builder.Ignore(x => x.Address); // == NotMapped
             builder.Property(x => x.FullName).HasComputedColumnSql("[Name] + ' ' + [LastName]", stored: true);
 
+            builder.HasAlternateKey(x => x.PESEL);
         }
     }
 }

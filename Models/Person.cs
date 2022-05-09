@@ -11,6 +11,9 @@ namespace Models
     //[Table("People", Schema = "efc")]
     public class Person : Entity
     {
+        //[Key]
+        //public Guid Guid { get; set; }
+
         //[Column("Name")]
         //[MaxLength(15)]
         public string FirstName { get; set; }

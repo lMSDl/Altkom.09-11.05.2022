@@ -13,6 +13,8 @@ namespace DAL.Configurations
         public override void Configure(EntityTypeBuilder<Address> builder)
         {
             base.Configure(builder);
+
+            //builder.HasKey(x => x.Ident);
         }
     }
 }

@@ -10,6 +10,7 @@ namespace Models
     //[NotMapped] //brak globalnego mapowania
     public class Address : Entity
     {
+        //public int Ident { get; set; }
         public string Street { get; set; }
         public string City { get; set; }
         public string ZipCode { get; set; }
