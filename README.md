@@ -8,7 +8,7 @@ Microsoft.EntityFrameworkCore.Tools (dla VS)
 
 * Instalacja dotnet-ef (CLI)
 ```
-dotnet tool install --global dotnent-ef
+dotnet tool install --global dotnet-ef
 ```
 
 * ConnectionString dla MSSql
