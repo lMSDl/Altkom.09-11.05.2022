@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Models
 {
-    //[Table("People")]
+    //[Table("People", Schema = "efc")]
     public class Person : Entity
     {
         //[Column("Name")]

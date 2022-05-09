@@ -13,7 +13,7 @@ namespace DAL.Configurations
     {
         public void Configure(EntityTypeBuilder<Person> builder)
         {
-            builder.ToTable("People");
+            builder.ToTable("People", "efc");
             builder.Property(x => x.FirstName).HasColumnName("Name").HasMaxLength(15);
             builder.Property(x => x.PESEL).HasPrecision(11, 0);//.HasColumnType("decimal(11,0)");
             builder.Property(x => x.LastName).IsRequired();
