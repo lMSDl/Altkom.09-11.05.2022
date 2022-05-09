@@ -17,7 +17,7 @@ Server=(localdb)\mssqllocaldb;Database=<name>
 Server=(local);Database=<name>;Integrated Security=true
 Server=(local)\\SQLExpress;Database=<name>;Integrated Security=true
 Server=<ip>;Database=<name>;Integrated Security=true
-Server=(local);Database=<name>;User ID=<login>;Password<password>
+Server=(local);Database=<name>;User ID=<login>;Password=<password>
 ```
 
 * Migracje
