@@ -23,9 +23,9 @@ Server=(local);Database=<name>;User ID=<login>;Password<password>
 * Migracje
   * CLI
   ```
-  dotnent ef migrations add <name>
-  dotnent ef migrations remove [-f]
-  dotnent ef database update
+  dotnet ef migrations add <name>
+  dotnet ef migrations remove [-f]
+  dotnet ef database update
   ```
   * Package Manager Console
   ```
