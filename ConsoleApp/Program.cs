@@ -1,12 +1,14 @@
 ﻿using DAL;
 using Microsoft.EntityFrameworkCore;
+using Models;
 using System;
+using System.Threading.Tasks;
 
 namespace ConsoleApp
 {
     class Program
     {
-        static void Main(string[] args)
+        static async Task Main(string[] args)
         {
 
             var contextOptions = new DbContextOptionsBuilder<MyContext>()
@@ -19,7 +21,10 @@ namespace ConsoleApp
 
             using (var context = new MyContext(contextOptions.Options))
             {
-                context.Database.EnsureCreated();
+                context.Database.Migrate();
+
+                //await context.People.ToListAsync();
+                await context.Set<Person>().ToListAsync();
             }
 
             using (var context = new MyContext(@"Server=(localdb)\mssqllocaldb;Database=EFC2"))
