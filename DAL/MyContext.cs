@@ -1,8 +1,12 @@
 ﻿using DAL.Configurations;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Models;
 using System;
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace DAL
 {
@@ -54,9 +58,21 @@ namespace DAL
             //modelBuilder.ApplyConfiguration(new PersonCofiguration());
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(PersonCofiguration).Assembly);
 
-            modelBuilder.Ignore<Address>(); // == NotMapped (globalny)
+            //modelBuilder.Ignore<Address>(); // == NotMapped (globalny)
         }
 
         //public DbSet<Person> People { get; set; }
+
+        
+        public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
+        {
+            ChangeTracker.Entries<Entity>()
+                .Where(x => x.State == EntityState.Modified)
+                .Select(x => x.Entity)
+                .ToList()
+                .ForEach(x => x.Updated = DateTime.Now);
+
+            return base.SaveChangesAsync(cancellationToken);
+        }
     }
 }

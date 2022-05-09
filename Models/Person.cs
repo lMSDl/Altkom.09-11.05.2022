@@ -21,7 +21,10 @@ namespace Models
         //[Precision(11, 0)] //EF Core 6!
         public ulong PESEL { get; set; }
 
+        public string FullName { get; }
+
         //[NotMapped] // brak lokalnego mapowania
         public Address Address { get; set; }
+        public int? AddressId { get; set; }
     }
 }
