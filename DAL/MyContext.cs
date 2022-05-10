@@ -44,6 +44,7 @@ namespace DAL
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
+
             //modelBuilder.Entity<Person>();
 
             //modelBuilder.Entity<Person>().ToTable("People");

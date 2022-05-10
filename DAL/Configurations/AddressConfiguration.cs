@@ -20,6 +20,8 @@ namespace DAL.Configurations
             builder.HasIndex(x => x.ZipCode).HasDatabaseName("Index_Address_Zip");
             builder.HasIndex(x => new { x.Street, x.City }).IsUnique().HasFilter(null)
                 .IncludeProperties(x => x.ZipCode);
+                //.HasAnnotation("SqlServer:Include", new[] { "ZipCode" });
+
 
             builder.HasCheckConstraint("CK_ZipCode", "LEN([ZipCode]) = 6 AND CHARINDEX('-', [ZipCode]) = 3");
         }
