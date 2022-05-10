@@ -18,7 +18,9 @@ namespace DAL.Configurations
             //builder.HasKey(x => x.Ident);
 
             builder.HasIndex(x => x.ZipCode).HasDatabaseName("Index_Address_Zip");
-            builder.HasIndex(x => new { x.Street, x.City }).IsUnique();
+            builder.HasIndex(x => new { x.Street, x.City }).IsUnique().HasFilter(null);
+
+            builder.HasCheckConstraint("CK_ZipCode", "LEN([ZipCode]) = 6 AND CHARINDEX('-', [ZipCode]) = 3");
         }
     }
 }

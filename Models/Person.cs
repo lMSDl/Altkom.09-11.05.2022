@@ -16,6 +16,7 @@ namespace Models
 
         //[Column("Name")]
         //[MaxLength(15)]
+        [RegularExpression("^A.*a$")]
         public string FirstName { get; set; }
         //[Required]
         public string LastName { get; set; }
@@ -25,6 +26,11 @@ namespace Models
         public ulong PESEL { get; set; }
 
         public string FullName { get; }
+
+        //[Phone]
+        //public string PhoneNumber { get; set; }
+        //[EmailAddress]
+        //public string Email { get; set; }
 
         //[NotMapped] // brak lokalnego mapowania
         public Address Address { get; set; }

@@ -36,7 +36,7 @@ namespace DAL
                     optionsBuilder.UseSqlServer(_connectionString);
 #if DEBUG
                 else
-                    optionsBuilder.UseSqlServer();
+                    optionsBuilder.UseSqlServer()/*.UseValidationCheckConstraints()*/;
 #endif
             }
         }
