@@ -11,5 +11,6 @@ namespace Models
         public string Name { get; set; }
 
         public Registration Registration { get; set; }
+        public Engine Engine { get; set; }
     }
 }

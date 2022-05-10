@@ -9,5 +9,7 @@ namespace Models
     public class Engine : Entity
     {
         public int Power { get; set; }
+
+        public IEnumerable<Vehicle> Vehicles { get; set; }
     }
 }
