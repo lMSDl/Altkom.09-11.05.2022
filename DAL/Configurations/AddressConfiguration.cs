@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore.Metadata.Builders;
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Models;
 using System;
 using System.Collections.Generic;
@@ -15,6 +16,9 @@ namespace DAL.Configurations
             base.Configure(builder);
 
             //builder.HasKey(x => x.Ident);
+
+            builder.HasIndex(x => x.ZipCode).HasDatabaseName("Index_Address_Zip");
+            builder.HasIndex(x => new { x.Street, x.City }).IsUnique();
         }
     }
 }
