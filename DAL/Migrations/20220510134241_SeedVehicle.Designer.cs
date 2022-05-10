@@ -4,14 +4,16 @@ using DAL;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace DAL.Migrations
 {
     [DbContext(typeof(MyContext))]
-    partial class MyContextModelSnapshot : ModelSnapshot
+    [Migration("20220510134241_SeedVehicle")]
+    partial class SeedVehicle
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -195,15 +197,6 @@ namespace DAL.Migrations
                         .HasFilter("[VehicleId] IS NOT NULL");
 
                     b.ToTable("Registration");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 100,
-                            Number = "ASJDA2313418",
-                            Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            VehicleId = 1500
-                        });
                 });
 
             modelBuilder.Entity("Models.SmallCompany", b =>

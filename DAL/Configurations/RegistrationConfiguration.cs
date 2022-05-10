@@ -14,6 +14,8 @@ namespace DAL.Configurations
         public override void Configure(EntityTypeBuilder<Registration> builder)
         {
             base.Configure(builder);
+
+            builder.HasData(new Registration { Id = 100, Number = "ASJDA2313418", VehicleId = 1500 });
         }
     }
 }
