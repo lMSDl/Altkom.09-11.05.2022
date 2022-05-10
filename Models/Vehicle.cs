@@ -12,5 +12,7 @@ namespace Models
 
         public Registration Registration { get; set; }
         public Engine Engine { get; set; }
+
+        public IEnumerable<Driver> Drivers { get; set; }
     }
 }

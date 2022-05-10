@@ -18,6 +18,8 @@ namespace DAL.Configurations
                 .OnDelete(DeleteBehavior.SetNull);
 
             builder.HasOne(x => x.Engine).WithMany(x => x.Vehicles);
+
+            builder.HasMany(x => x.Drivers).WithMany(x => x.Vehicles);
         }
     }
 }
