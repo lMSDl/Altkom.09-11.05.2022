@@ -17,10 +17,42 @@ namespace ConsoleApp
                 //połączenie do loclDB (baza danych w pliku)
                 //.UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=EFC");
                 //połączenie do SQL Server za pomocą Windows Authentication
-                .UseSqlServer(@"Server=(local);Database=EFC;Integrated Security=true");
+                .UseSqlServer(@"Server=(local);Database=EFC;Integrated Security=true")
+                .LogTo(Console.WriteLine);
             //połączenie do SQL Server za pomocą loginu i hasła
             //.UseSqlServer(@"Server=(local);Database=EFC;User Id=databaseuser;Password=asdasdasd");
 
+            await CreateUpdateDelete(contextOptions);
+            using (var context = new MyContext(contextOptions.Options))
+            {
+                IQueryable<Person> query = context.Set<Person>().AsNoTracking();
+                Console.WriteLine("Include address?");
+                if(Console.ReadKey().KeyChar == 'y')
+                {
+                    //include - instrukcja pobrania wskazanej zależności
+                    query = query.Include(x => x.Address);
+                }
+
+                var people = await context.Set<Person>().ToListAsync();
+                //context.ChangeTracker.Clear();
+                //await context.Set<Address>().LoadAsync(); // ładuje WSZYSTKIE encje do dbContextu
+                await context.Entry(people.First()).Reference(x => x.Address).LoadAsync();
+
+                people = await query.OrderBy(x => x.FirstName).ToListAsync();
+                //people = (await query.ToListAsync()).OrderBy(x => x.FirstName).ToList();
+            }
+
+
+                //using (var context = new MyContext(@"Server=(localdb)\mssqllocaldb;Database=EFC2"))
+                //{
+                //    context.Database.EnsureDeleted();
+                //    context.Database.EnsureCreated();
+                //}
+
+            }
+
+        private static async Task CreateUpdateDelete(DbContextOptionsBuilder<MyContext> contextOptions)
+        {
             using (var context = new MyContext(contextOptions.Options))
             {
                 context.Database.EnsureDeleted();
@@ -50,26 +82,19 @@ namespace ConsoleApp
                 context.Set<Person>().Update(person2);
                 //mówimy dbContex, żeby nie aktualizował zmiany daty urodzenia
                 //context.Entry(person2).Property(x => x.BithDate).IsModified = false;
-
+                person.Address = new Address { City = "Kraków", Street = "Warszawska", ZipCode = "22-222" };
                 Console.WriteLine(context.ChangeTracker.ToDebugString(Microsoft.EntityFrameworkCore.ChangeTracking.ChangeTrackerDebugStringOptions.IncludeProperties));
 
                 await context.SaveChangesAsync();
 
                 //context.Set<Person>().Remove(person2);
                 //czyścimy dbContext ponieważ chcemy załączyć obiekt o id, który jest już załączony
-                context.ChangeTracker.Clear();
-                context.Set<Person>().Remove(new Person { Id = 2 });
+                //context.ChangeTracker.Clear();
+                //context.Set<Person>().Remove(new Person { Id = 2 });
 
-                await context.SaveChangesAsync();
+                //await context.SaveChangesAsync();
 
             }
-
-            //using (var context = new MyContext(@"Server=(localdb)\mssqllocaldb;Database=EFC2"))
-            //{
-            //    context.Database.EnsureDeleted();
-            //    context.Database.EnsureCreated();
-            //}
-
         }
 
         private static async Task WorkingWithComponents(DbContextOptionsBuilder<MyContext> contextOptions)
