@@ -1,4 +1,5 @@
 ﻿using DAL;
+using DAL.Services;
 using Microsoft.EntityFrameworkCore;
 using Models;
 using System;
@@ -25,18 +26,21 @@ namespace ConsoleApp
             await CreateUpdateDelete(contextOptions);
             using (var context = new MyContext(contextOptions.Options))
             {
+                var peopleService = new PeopleService(context);
+
                 IQueryable<Person> query = context.Set<Person>().AsNoTracking();
-                Console.WriteLine("Include address?");
-                if(Console.ReadKey().KeyChar == 'y')
+                Console.WriteLine("Include address? ");
+                if (Console.ReadKey().KeyChar == 'y')
                 {
                     //include - instrukcja pobrania wskazanej zależności
                     query = query.Include(x => x.Address)/*.ThenInclude(x => x.)*/;
                 }
 
-                var people = await context.Set<Person>().ToListAsync();
+                //var people = await context.Set<Person>().ToListAsync();
+                var people = await peopleService.ReadAsync();
                 //context.ChangeTracker.Clear();
                 //await context.Set<Address>().LoadAsync(); // ładuje WSZYSTKIE encje do dbContextu
-                await context.Entry(people.First()).Reference(x => x.Address).LoadAsync();
+                //await context.Entry(people.First()).Reference(x => x.Address).LoadAsync();
 
                 people = await query.OrderBy(x => x.FirstName).ToListAsync();
                 //people = (await query.ToListAsync()).OrderBy(x => x.FirstName).ToList();
@@ -46,59 +50,66 @@ namespace ConsoleApp
             }
 
 
-                //using (var context = new MyContext(@"Server=(localdb)\mssqllocaldb;Database=EFC2"))
-                //{
-                //    context.Database.EnsureDeleted();
-                //    context.Database.EnsureCreated();
-                //}
+            //using (var context = new MyContext(@"Server=(localdb)\mssqllocaldb;Database=EFC2"))
+            //{
+            //    context.Database.EnsureDeleted();
+            //    context.Database.EnsureCreated();
+            //}
 
-            }
+        }
 
         private static async Task CreateUpdateDelete(DbContextOptionsBuilder<MyContext> contextOptions)
         {
-            using (var context = new MyContext(contextOptions.Options))
-            {
-                context.Database.EnsureDeleted();
-                context.Database.Migrate();
+            using var context = new MyContext(contextOptions.Options);
+            context.Database.EnsureDeleted();
+            context.Database.Migrate();
 
-                var person = new Person { FirstName = "Ada", LastName = "Ewowska", BithDate = DateTime.Now.AddYears(-23), PESEL = 12312312332 };
-                var address = new Address { City = "Warszawa", Street = " Krakowska", ZipCode = "11-111" };
-                person.Address = address;
+            var peopleService = new PeopleService(context);
 
-                var person2 = new Person { FirstName = "Ewa", LastName = "Ewowska", BithDate = DateTime.Now.AddYears(-23), PESEL = 32132132132 };
-                person2.Address = address;
+            var person = new Person { FirstName = "Ada", LastName = "Ewowska", BithDate = DateTime.Now.AddYears(-23), PESEL = 12312312332 };
+            var address = new Address { City = "Warszawa", Street = " Krakowska", ZipCode = "11-111" };
+            person.Address = address;
 
-                // context.Set<Person>().Attach(person);
-                context.Entry(person).State = EntityState.Unchanged;
+            var person2 = new Person { FirstName = "Ewa", LastName = "Ewowska", BithDate = DateTime.Now.AddYears(-23), PESEL = 32132132132 };
+            person2.Address = address;
 
-                //Jeśli klucz jest generowany przez bazę, to metoda Update działa jak AddOrUpdate w zależności czy wartość klucza jest == 0 lub != 0
-                //context.Set<Person>().Update(person);
-                //context.Set<Person>().Update(person2);
-                await context.Set<Person>().AddAsync(person);
-                await context.Set<Person>().AddAsync(person2);
+            // context.Set<Person>().Attach(person);
+            //context.Entry(person).State = EntityState.Unchanged;
 
-                Console.WriteLine(context.ChangeTracker.ToDebugString(Microsoft.EntityFrameworkCore.ChangeTracking.ChangeTrackerDebugStringOptions.IncludeProperties));
+            //Jeśli klucz jest generowany przez bazę, to metoda Update działa jak AddOrUpdate w zależności czy wartość klucza jest == 0 lub != 0
+            //context.Set<Person>().Update(person);
+            //context.Set<Person>().Update(person2);
+            //await context.Set<Person>().AddAsync(person);
+            //await context.Set<Person>().AddAsync(person2);
+            //Console.WriteLine(context.ChangeTracker.ToDebugString(Microsoft.EntityFrameworkCore.ChangeTracking.ChangeTrackerDebugStringOptions.IncludeProperties));
+            //await context.SaveChangesAsync();
 
-                await context.SaveChangesAsync();
+            await peopleService.CreateAsync(person);
+            await peopleService.CreateAsync(person2);
 
-                person2.BithDate = DateTime.Now.AddYears(-32);
-                context.Set<Person>().Update(person2);
-                //mówimy dbContex, żeby nie aktualizował zmiany daty urodzenia
-                //context.Entry(person2).Property(x => x.BithDate).IsModified = false;
-                person.Address = new Address { City = "Kraków", Street = "Warszawska", ZipCode = "22-222" };
-                Console.WriteLine(context.ChangeTracker.ToDebugString(Microsoft.EntityFrameworkCore.ChangeTracking.ChangeTrackerDebugStringOptions.IncludeProperties));
 
-                await context.SaveChangesAsync();
+            person2.BithDate = DateTime.Now.AddYears(-32);
+            person2.Address = new Address { City = "Kraków", Street = "Warszawska", ZipCode = "22-222" };
 
-                //context.Set<Person>().Remove(person2);
-                //czyścimy dbContext ponieważ chcemy załączyć obiekt o id, który jest już załączony
-                //context.ChangeTracker.Clear();
-                //context.Set<Person>().Remove(new Person { Id = 2 });
+            //context.Set<Person>().Update(person2);
+            //mówimy dbContex, żeby nie aktualizował zmiany daty urodzenia
+            //context.Entry(person2).Property(x => x.BithDate).IsModified = false;
+            //Console.WriteLine(context.ChangeTracker.ToDebugString(Microsoft.EntityFrameworkCore.ChangeTracking.ChangeTrackerDebugStringOptions.IncludeProperties));
+            //await context.SaveChangesAsync();
 
-                //await context.SaveChangesAsync();
+            await peopleService.UpdateAsync(person2.Id, person2);
 
-            }
+            //context.Set<Person>().Remove(person2);
+            //czyścimy dbContext ponieważ chcemy załączyć obiekt o id, który jest już załączony
+            //context.ChangeTracker.Clear();
+            //context.Set<Person>().Remove(new Person { Id = 2 });
+
+            await peopleService.DeleteAsync(2);
+
+            //await context.SaveChangesAsync();
+
         }
+
 
         private static async Task WorkingWithComponents(DbContextOptionsBuilder<MyContext> contextOptions)
         {

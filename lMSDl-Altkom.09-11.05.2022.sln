@@ -3,13 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.32413.511
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleApp", "ConsoleApp\ConsoleApp.csproj", "{7A3A9D9B-296B-4B1D-A6F0-B86889BDB0C7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConsoleApp", "ConsoleApp\ConsoleApp.csproj", "{7A3A9D9B-296B-4B1D-A6F0-B86889BDB0C7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DAL", "DAL\DAL.csproj", "{1352EA13-580C-4B9F-9AF3-5DF08277C2D1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DAL", "DAL\DAL.csproj", "{1352EA13-580C-4B9F-9AF3-5DF08277C2D1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApplication", "WebApplication\WebApplication.csproj", "{D6F9A5ED-753D-48C7-A1BC-C032A95687F1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebApplication", "WebApplication\WebApplication.csproj", "{D6F9A5ED-753D-48C7-A1BC-C032A95687F1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Models", "Models\Models.csproj", "{2BFB345F-7C7F-461C-B1B5-36557233D975}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Models", "Models\Models.csproj", "{2BFB345F-7C7F-461C-B1B5-36557233D975}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Services.Interfaces", "Services.Interfaces\Services.Interfaces.csproj", "{CE02F578-D7DB-4018-A63A-68D8DE442B60}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{2BFB345F-7C7F-461C-B1B5-36557233D975}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2BFB345F-7C7F-461C-B1B5-36557233D975}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2BFB345F-7C7F-461C-B1B5-36557233D975}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CE02F578-D7DB-4018-A63A-68D8DE442B60}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CE02F578-D7DB-4018-A63A-68D8DE442B60}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CE02F578-D7DB-4018-A63A-68D8DE442B60}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CE02F578-D7DB-4018-A63A-68D8DE442B60}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
