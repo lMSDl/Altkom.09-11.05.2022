@@ -33,3 +33,14 @@ Server=(local);Database=<name>;User ID=<login>;Password=<password>
   Remove-Migration [-f]
   Update-Database
   ```
+* Database first
+  * CLI
+  ```
+  dotnet ef dbcontext scaffold <connection string> <provider package>
+  dotnet ef dbcontext scaffold "Server=(local);Database=EFC;Integrated security=true" Microsoft.EntityFrameworkCore.SqlServer
+  ```
+    * Package Manager Console
+  ```
+  Scaffold-DbContext <connection string> <provider package>
+  Scaffold-DbContext "Server=(local);Database=EFC;Integrated security=true" Microsoft.EntityFrameworkCore.SqlServer
+  ```
