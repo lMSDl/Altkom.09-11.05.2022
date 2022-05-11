@@ -16,7 +16,7 @@ namespace Models
 
         //[Column("Name")]
         //[MaxLength(15)]
-        [RegularExpression("^A.*a$")]
+        //[RegularExpression("^A.*a$")]
         public string FirstName { get; set; }
         //[Required]
         public string LastName { get; set; }

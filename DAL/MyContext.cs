@@ -27,6 +27,10 @@ namespace DAL
             _connectionString = connectionString;
         }
 
+        public DbSet<Status> Statuses { get; set; }
+        public DbSet<SubComponent> SubComponents { get; set; }
+        public DbSet<Component> Component { get; set; }
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             base.OnConfiguring(optionsBuilder);

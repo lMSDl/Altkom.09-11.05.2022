@@ -4,14 +4,16 @@ using DAL;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace DAL.Migrations
 {
     [DbContext(typeof(MyContext))]
-    partial class MyContextModelSnapshot : ModelSnapshot
+    [Migration("20220511073812_RemoveRegExFromName")]
+    partial class RemoveRegExFromName
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -71,18 +73,6 @@ namespace DAL.Migrations
                     b.ToTable("Address");
 
                     b.HasCheckConstraint("CK_ZipCode", "LEN([ZipCode]) = 6 AND CHARINDEX('-', [ZipCode]) = 3");
-                });
-
-            modelBuilder.Entity("Models.Component", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Component");
                 });
 
             modelBuilder.Entity("Models.Driver", b =>
@@ -242,38 +232,6 @@ namespace DAL.Migrations
                     b.ToTable("SmallCompany");
                 });
 
-            modelBuilder.Entity("Models.Status", b =>
-                {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Statuses");
-                });
-
-            modelBuilder.Entity("Models.SubComponent", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int?>("ComponentId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("StatusId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ComponentId");
-
-                    b.HasIndex("StatusId");
-
-                    b.ToTable("SubComponents");
-                });
-
             modelBuilder.Entity("Models.Vehicle", b =>
                 {
                     b.Property<int>("Id")
@@ -384,19 +342,6 @@ namespace DAL.Migrations
                     b.Navigation("Vehicle");
                 });
 
-            modelBuilder.Entity("Models.SubComponent", b =>
-                {
-                    b.HasOne("Models.Component", null)
-                        .WithMany("SubComponents")
-                        .HasForeignKey("ComponentId");
-
-                    b.HasOne("Models.Status", "Status")
-                        .WithMany()
-                        .HasForeignKey("StatusId");
-
-                    b.Navigation("Status");
-                });
-
             modelBuilder.Entity("Models.Vehicle", b =>
                 {
                     b.HasOne("Models.Engine", "Engine")
@@ -413,11 +358,6 @@ namespace DAL.Migrations
                         .HasForeignKey("Models.LargeCompany", "Id")
                         .OnDelete(DeleteBehavior.ClientCascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("Models.Component", b =>
-                {
-                    b.Navigation("SubComponents");
                 });
 
             modelBuilder.Entity("Models.Engine", b =>
