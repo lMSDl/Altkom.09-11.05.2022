@@ -30,7 +30,7 @@ namespace ConsoleApp
                 if(Console.ReadKey().KeyChar == 'y')
                 {
                     //include - instrukcja pobrania wskazanej zależności
-                    query = query.Include(x => x.Address);
+                    query = query.Include(x => x.Address)/*.ThenInclude(x => x.)*/;
                 }
 
                 var people = await context.Set<Person>().ToListAsync();
