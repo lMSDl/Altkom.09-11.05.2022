@@ -9,5 +9,6 @@ namespace Services.Interfaces
     public interface IPeopleService : IEntityService<Person>
     {
         Task<IEnumerable<Person>> ReadAsync(string firstName, string lastName);
+        Task<Person> ReadAsync(ulong pesel);
     }
 }

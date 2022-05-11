@@ -65,7 +65,7 @@ namespace ConsoleApp
             context.Database.EnsureDeleted();
             context.Database.Migrate();
 
-            IEntityService<Person> peopleService = new PeopleService(context);
+            IPeopleService peopleService = new PeopleService(context);
 
             var person = new Person { FirstName = "Ada", LastName = "Ewowska", BithDate = DateTime.Now.AddYears(-23), PESEL = 12312312332 };
             var address = new Address { City = "Warszawa", Street = " Krakowska", ZipCode = "11-111" };
@@ -104,6 +104,8 @@ namespace ConsoleApp
             //czyścimy dbContext ponieważ chcemy załączyć obiekt o id, który jest już załączony
             //context.ChangeTracker.Clear();
             //context.Set<Person>().Remove(new Person { Id = 2 });
+
+            person2 = await peopleService.ReadAsync(12312312332);
 
             await peopleService.DeleteAsync(2);
 

@@ -34,5 +34,17 @@ namespace DAL.Services
                 .ToListAsync();
             return result;
         }
+
+        public override async Task DeleteAsync(int id)
+        {
+            //await Context.Database.ExecuteSqlRawAsync("DELETE FROM efc.People WHERE Id = {0}", id);
+            await Context.Database.ExecuteSqlInterpolatedAsync($"DELETE FROM efc.People WHERE Id = {id}");
+        }
+
+        public async Task<Person> ReadAsync(ulong pesel)
+        {
+            var result = await Context.Set<Person>().FromSqlInterpolated($"EXEC efc.GetPersonByPESEL {pesel}").ToListAsync();
+            return result.FirstOrDefault();
+        }
     }
 }
