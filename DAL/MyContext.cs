@@ -76,7 +76,6 @@ namespace DAL
                 .Select(x => x.Entity)
                 .ToList()
                 .ForEach(x => x.Updated = DateTime.Now);
-
             return base.SaveChangesAsync(cancellationToken);
         }
 

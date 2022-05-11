@@ -2,6 +2,7 @@
 using DAL.Services;
 using Microsoft.EntityFrameworkCore;
 using Models;
+using Services.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,7 +27,7 @@ namespace ConsoleApp
             await CreateUpdateDelete(contextOptions);
             using (var context = new MyContext(contextOptions.Options))
             {
-                var peopleService = new PeopleService(context);
+                IEntityService<Person> peopleService = new PeopleService(context);
 
                 IQueryable<Person> query = context.Set<Person>().AsNoTracking();
                 Console.WriteLine("Include address? ");
@@ -64,7 +65,7 @@ namespace ConsoleApp
             context.Database.EnsureDeleted();
             context.Database.Migrate();
 
-            var peopleService = new PeopleService(context);
+            IEntityService<Person> peopleService = new PeopleService(context);
 
             var person = new Person { FirstName = "Ada", LastName = "Ewowska", BithDate = DateTime.Now.AddYears(-23), PESEL = 12312312332 };
             var address = new Address { City = "Warszawa", Street = " Krakowska", ZipCode = "11-111" };
