@@ -40,6 +40,9 @@ namespace ConsoleApp
 
                 people = await query.OrderBy(x => x.FirstName).ToListAsync();
                 //people = (await query.ToListAsync()).OrderBy(x => x.FirstName).ToList();
+
+                //mimo, że nie załączamy właściwości zależnych, to możemy wyszukiwać po ich kolumnach
+                people = await query.Where(x => x.Address.City == "Kraków").ToListAsync();
             }
 
 
